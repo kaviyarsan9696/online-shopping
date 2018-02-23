@@ -20,7 +20,7 @@ if (isset($_SESSION['uid'])) {
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a href="#" class="navbar-brand">online shopping</a>
+				<a href="#" class="navbar-brand">Online Shopping</a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a href="#"><span class="glyphicon glyphicon-home"></span>home</a></li>
@@ -30,7 +30,7 @@ if (isset($_SESSION['uid'])) {
 				
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> cart<span class="badge">0</span></a>
+				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> cart</a>
 				<div class="dropdown-menu" style="width:400px;">
 					<div class="panel panel-success">
 						<div class="panel-heading">

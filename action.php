@@ -135,7 +135,7 @@ if(isset($_POST['addToProduct'])){
 	}
 }
 
-if(isset($_POST["get_cart_product"])){
+if(isset($_POST["get_cart_product"]) || isset($_POST['cart_checkout'])){
 
 	$uid = $_SESSION['uid'];
 	$sql = "SELECT * FROM `cart` WHERE `user_id` = '$uid'";
@@ -146,21 +146,78 @@ if(isset($_POST["get_cart_product"])){
 		while ($row=mysqli_fetch_array($run_query)) {
 			$id=$row["id"];
 			$pro_id =$row['ip_id'];
-			$pro_name=$row["pruduct_title"];
+			$pro_name=$row["product_title"];
+			$qty = $row["qty"];
 			$pro_image=$row["product_image"];
 			$pro_price=$row['price'];
-
-			echo "
+			$total = $row['total_amount'];
+				if(isset($_POST["get_cart_product"])){
+						echo "
 				<div class='row'>
 								<div class='col-md-3'>$no</div>
 								<div class='col-md-3'><img src='$pro_image' width='60px;' height='50px;'></div>
 								<div class='col-md-3'>$pro_name</div>
 								<div class='col-md-3'>$.$pro_price.00</div>
-							</div>
+							</div>";
+					$no= $no + 1;
+					}else
+						{
 
-			";
-			$no= $no + 1;
+
+						echo"	<div class='row'>
+							<div class='col-md-2'>
+								<div class='btn-group'>
+									<a href='#' remove_id='$pro_id' class='btn btn-danger remove'><span class='glyphicon glyphicon-trash'></span></a>
+									<a href='#' update_id='$pro_id' class='btn btn-primary update'><span class='glyphicon glyphicon-ok-sign'></span></a>
+								</div>
+							</div>
+							<div class='col-md-2'><img src='$pro_image' width='50px;' height='60px;'></div>
+							<div class='col-md-2'><b>$pro_name</b></div>
+							<div class='col-md-2'><input type='text' class='form-control qty' pid='$pro_id' id='qty-$pro_id' value='$qty' ></div>
+							<div class='col-md-2'><input type='text' class='form-control price' pid='$pro_id' id='price-$pro_id' value='$pro_price' disabled></div>
+							<div class='col-md-2'><input type='text' class='form-control total' pid='$pro_id' id='total-$pro_id' value='$total' disabled></div>
+						</div>";
+						}
+			
 		}
 	}
 }
+if (isset($_POST['cart_count'])) {
+	$uid = $_SESSION["uid"];
+	$sql = "SELECT * FROM `cart` WHERE user_id = '$uid'";
+	$run_query = mysqli_query($conn,$sql);
+	echo mysqli_num_rows($run_query);
+}
+if(isset($_POST['removeFromCart'])){
+	$pid=$_POST["removeId"];
+	$uid = $_SESSION["uid"];
+	$sql = "DELETE FROM `cart` where user_id='$uid' AND ip_id='$pid'";
+	$run_query=mysqli_query($conn,$sql);
+	if($run_query){
+		echo "<div class='alert alert-danger'>
+  			<a href='#' class= 'close' data-dismiss='alert' aria-label='close'>&times:</a>
+  			<b>product is removed from cart..!</b>
+  		</div>";
+  	
+	}
+}
+if (isset($_POST['updateProduct'])) {
+	$uid = $_SESSION['uid'];
+	$pid = $_POST['updateId'];
+	$qty = $_POST['qty'];
+	$price = $_POST['price'];
+	$total = $_POST['total'];
+
+	$sql = "UPDATE `cart` SET `qty`='$qty', `price` = '$price' ,`total_amount`='$total' WHERE user_id='$uid' AND `ip_id` = '$pid'";
+	$run_query = mysqli_query($conn,$sql);
+	if($run_query){
+		echo "<div class='alert alert-success'>
+  			<a href='#' class= 'close' data-dismiss='alert' aria-label='close'>&times:</a>
+  			<b>product is updated..!</b>
+  		</div> ";
+	}
+
+}
  ?>
+
+

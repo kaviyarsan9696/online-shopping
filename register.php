@@ -124,7 +124,7 @@ if(isset($_REQUEST)){
   	exit();
    }else{
    	$password = md5($password);
-   	$sql = "INSERT into `user_info` (`user_id`,`first_name`,`last_name`,`email`,`password`,`mobile`,`address1`,`address2`) VALUES (NULL,' $f_name','$l_name','$email','$password','$mobile','address1','address2')";
+   	$sql = "INSERT into `user_info` (`user_id`,`first_name`,`last_name`,`email`,`password`,`mobile`,`address1`,`address2`) VALUES (NULL,' $f_name','$l_name','$email','$password','$mobile','$address1','$address2')";
    	$run_query = mysqli_query($conn,$sql);
    	if($run_query){
    		echo"
